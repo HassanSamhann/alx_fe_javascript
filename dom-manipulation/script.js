@@ -6,15 +6,16 @@ const quotes = [
     { text: "I think, therefore I am.", category: "Philosophical" }
   ];
     
-  function showRandom(){
+  function showRandomQuote(){
 
     let quotesindex = Math.floor(Math.random()*quotes.length); 
     let quote = quotes[quotesindex]; 
-    document.getElementById("quoteDisplay").innerText = `${quote.text} - ${quote.category}` ;  
+    let displayquote=  document.getElementById("quoteDisplay")
+    displayquote.innerHTML = `${quote.text} - ${quote.category}`
   }
 
 
-  document.getElementById("newQuote").addEventListener("click",showRandom);
+  document.getElementById("newQuote").addEventListener("click",showRandomQuote);
 
   function addQuote(){
     let newQuoteText = document.getElementById("newQuoteText").value; 
