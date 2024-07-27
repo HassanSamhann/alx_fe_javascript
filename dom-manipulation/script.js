@@ -26,3 +26,28 @@ const quotes = [
         document.getElementById('newQuoteText').value = '';
         document.getElementById('newQuoteCategory').value = '';    }
   }
+  function createAddQuoteForm() {
+    const formContainer = document.createElement('div');
+  
+    const quoteInput = document.createElement('input');
+    quoteInput.setAttribute('id', 'newQuoteText');
+    quoteInput.setAttribute('type', 'text');
+    quoteInput.setAttribute('placeholder', 'Enter a new quote');
+    
+    const categoryInput = document.createElement('input');
+    categoryInput.setAttribute('id', 'newQuoteCategory');
+    categoryInput.setAttribute('type', 'text');
+    categoryInput.setAttribute('placeholder', 'Enter quote category');
+    
+    const addButton = document.createElement('button');
+    addButton.textContent = 'Add Quote';
+    addButton.onclick = addQuote;
+    
+    formContainer.appendChild(quoteInput);
+    formContainer.appendChild(categoryInput);
+    formContainer.appendChild(addButton);
+    
+    document.body.appendChild(formContainer);
+  }
+  
+  createAddQuoteForm();
