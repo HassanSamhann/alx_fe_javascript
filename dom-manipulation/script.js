@@ -388,7 +388,7 @@ function syncWithServer() {
   .catch(error => console.error("Error syncing with server:", error));
 }
 
-function fetchFromServer() {
+function fetchQuotesFromServer() {
   fetch(serverUrl)
   .then(response => response.json())
   .then(serverQuotes => {
@@ -410,8 +410,8 @@ function fetchFromServer() {
 }
 
 function initSync() {
-  fetchFromServer();
-  setInterval(fetchFromServer, 60000); // Fetch updates every minute
+  fetchQuotesFromServer();
+  setInterval(fetchQuotesFromServer, 60000); // Fetch updates every minute
 }
 
 initSync();
