@@ -140,11 +140,6 @@ let quotes = JSON.parse(localStorage.getItem('quotes')) || [
 ];
 
 let categories = [];
-quotes.forEach(quote => {
-  if (!categories.includes(quote.category)) {
-    categories.push(quote.category);
-  }
-});
 
 function saveQuotes() {
   localStorage.setItem('quotes', JSON.stringify(quotes));
@@ -165,20 +160,14 @@ function addQuote() {
   if (newQuoteText && newQuoteCategory) {
     quotes.push({ text: newQuoteText, category: newQuoteCategory });
     saveQuotes();
-    updateCategories(newQuoteCategory);
+    if (!categories.includes(newQuoteCategory)) {
+      categories.push(newQuoteCategory);
+      saveCategories();
+      populateCategories();
+    }
     document.getElementById('newQuoteText').value = '';
     document.getElementById('newQuoteCategory').value = '';
-  }
-}
-
-function updateCategories(newCategory) {
-  if (!categories.includes(newCategory)) {
-    categories.push(newCategory);
-    const option = document.createElement('option');
-    option.value = newCategory;
-    option.textContent = newCategory;
-    document.getElementById('categoryFilter').appendChild(option);
-    saveCategories();
+    filterQuotes();
   }
 }
 
@@ -190,14 +179,21 @@ function loadCategories() {
   const savedCategories = JSON.parse(localStorage.getItem('categories'));
   if (savedCategories) {
     categories = savedCategories;
-    const categoryFilter = document.getElementById('categoryFilter');
-    categories.forEach(category => {
-      const option = document.createElement('option');
-      option.value = category;
-      option.textContent = category;
-      categoryFilter.appendChild(option);
-    });
+  } else {
+    categories = quotes.map(quote => quote.category).filter((value, index, self) => self.indexOf(value) === index);
+    saveCategories();
   }
+}
+
+function populateCategories() {
+  const categoryFilter = document.getElementById('categoryFilter');
+  categoryFilter.innerHTML = '<option value="all">All Categories</option>';
+  categories.forEach(category => {
+    const option = document.createElement('option');
+    option.value = category;
+    option.textContent = category;
+    categoryFilter.appendChild(option);
+  });
 }
 
 function filterQuotes() {
@@ -235,18 +231,22 @@ function importFromJsonFile(event) {
     saveQuotes();
     alert('Quotes imported successfully!');
     importedQuotes.forEach(quote => {
-      updateCategories(quote.category);
+      if (!categories.includes(quote.category)) {
+        categories.push(quote.category);
+      }
     });
+    saveCategories();
+    populateCategories();
+    filterQuotes();
   };
   fileReader.readAsText(event.target.files[0]);
 }
 
-// Call the functions to create the form and load categories on page load
+// Load categories and apply filter on page load
 loadCategories();
-filterQuotes(); // Apply the filter if there is a saved category
-
+populateCategories();
 const savedCategory = localStorage.getItem('selectedCategory');
 if (savedCategory) {
   document.getElementById('categoryFilter').value = savedCategory;
-  filterQuotes();
 }
+filterQuotes();
