@@ -82,29 +82,29 @@
 //   }
 // }
 
-// function createAddQuoteForm() {
-//   const formContainer = document.createElement('div');
+function createAddQuoteForm() {
+  const formContainer = document.createElement('div');
 
-//   const quoteInput = document.createElement('input');
-//   quoteInput.setAttribute('id', 'newQuoteText');
-//   quoteInput.setAttribute('type', 'text');
-//   quoteInput.setAttribute('placeholder', 'Enter a new quote');
+  const quoteInput = document.createElement('input');
+  quoteInput.setAttribute('id', 'newQuoteText');
+  quoteInput.setAttribute('type', 'text');
+  quoteInput.setAttribute('placeholder', 'Enter a new quote');
   
-//   const categoryInput = document.createElement('input');
-//   categoryInput.setAttribute('id', 'newQuoteCategory');
-//   categoryInput.setAttribute('type', 'text');
-//   categoryInput.setAttribute('placeholder', 'Enter quote category');
+  const categoryInput = document.createElement('input');
+  categoryInput.setAttribute('id', 'newQuoteCategory');
+  categoryInput.setAttribute('type', 'text');
+  categoryInput.setAttribute('placeholder', 'Enter quote category');
   
-//   const addButton = document.createElement('button');
-//   addButton.textContent = 'Add Quote';
-//   addButton.onclick = addQuote;
+  const addButton = document.createElement('button');
+  addButton.textContent = 'Add Quote';
+  addButton.onclick = addQuote;
   
-//   formContainer.appendChild(quoteInput);
-//   formContainer.appendChild(categoryInput);
-//   formContainer.appendChild(addButton);
+  formContainer.appendChild(quoteInput);
+  formContainer.appendChild(categoryInput);
+  formContainer.appendChild(addButton);
   
-//   document.body.appendChild(formContainer);
-// }
+  document.body.appendChild(formContainer);
+}
 
 // function exportToJsonFile() {
 //   const dataStr = JSON.stringify(quotes, null, 2);
@@ -241,7 +241,7 @@ function importFromJsonFile(event) {
 }
 
 function syncWithServer() {
-  fetch('https://jsonplaceholder.typicode.com/posts')
+  fetch('quotes.json')
     .then(response => response.json())
     .then(serverQuotes => {
       const newQuotes = serverQuotes.filter(serverQuote => !quotes.some(localQuote => localQuote.id === serverQuote.id));
@@ -269,10 +269,9 @@ function updateCategoriesWithServerData(newQuotes) {
   saveCategories();
 }
 
-// Call the functions to create the form and load categories on page load
 createAddQuoteForm();
 loadCategories();
-filterQuotes(); // Apply the filter if there is a saved category
+filterQuotes(); 
 
 const savedCategory = localStorage.getItem('selectedCategory');
 if (savedCategory) {
@@ -280,5 +279,4 @@ if (savedCategory) {
   filterQuotes();
 }
 
-// Periodic syncing every 30 seconds
 setInterval(syncWithServer, 30000);
