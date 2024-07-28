@@ -374,7 +374,7 @@ filterQuotes();
 // Server Sync Functions
 
 async function syncWithServer() {
-  await fetch(serverUrl, {
+  await fetch("https://jsonplaceholder.typicode.com/posts", {
     method: "POST",
     body: JSON.stringify(quotes),
     headers: {
