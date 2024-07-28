@@ -409,9 +409,9 @@ async function fetchQuotesFromServer() {
   .catch(error => console.error("Error fetching from server:", error));
 }
 
-function initSync() {
+function syncQuotes() {
   fetchQuotesFromServer();
   setInterval(fetchQuotesFromServer, 60000); // Fetch updates every minute
 }
 
-initSync();
+syncQuotes();
