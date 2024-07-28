@@ -373,8 +373,8 @@ filterQuotes();
 
 // Server Sync Functions
 
-function syncWithServer() {
-  fetch(serverUrl, {
+async function syncWithServer() {
+  await fetch(serverUrl, {
     method: "POST",
     body: JSON.stringify(quotes),
     headers: {
@@ -388,8 +388,8 @@ function syncWithServer() {
   .catch(error => console.error("Error syncing with server:", error));
 }
 
-function fetchQuotesFromServer() {
-  fetch(serverUrl)
+async function fetchQuotesFromServer() {
+  await fetch(serverUrl)
   .then(response => response.json())
   .then(serverQuotes => {
     const localQuoteMap = new Map(quotes.map(q => [q.text, q]));
