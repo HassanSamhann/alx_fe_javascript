@@ -250,7 +250,7 @@
 //   document.getElementById('categoryFilter').value = savedCategory;
 // }
 // filterQuotes();
-const serverUrl = "https://jsonplaceholder.typicode.com/posts"; // Mock API for simulation
+const serverUrl = "https://jsonplaceholder.typicode.com/todos"; // Mock API for simulation
 
 let quotes = JSON.parse(localStorage.getItem('quotes')) || [
   { text: "Life is short, make every moment count.", category: "Motivational" },
